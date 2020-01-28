@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="manifest" href="/manifest.json">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Steria IOT</title>
+<meta name="description" content="" />
+<style>
+body {
+    background-color: black;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.sensor {
+    padding: 5px;
+    size: 22px;
+    color: white;
+    width: 200px;
+    height: 50px;
+    position: relative;
+    background-color: rgba(0, 255, 0, .45);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+.temp1 {
+    top: -520px;
+    left: 960px;
+}
+
+.temp2 {
+    top: -190px;
+    left: 140px;
+}
+
+.touch {
+    top: -170px;
+    left: 780px;
+}
+
+.touched {
+    top: -170px;
+    left: 780px;
+    background-color: rgb(255, 165, 0, .45);
+    border-radius: 5px;
+    border-width: 5px;
+    border-color: orange;
+}
+
+.door {
+    top: -420px;
+    left: 870px;
+}
+</style>
+</head>
+<body class="">
+    <div class="wrapper">
+        <div class="graphics">
+            <img src="water_treatment_plant.png">
+            <div id="tempdiv1" class="sensor temp1">Getting temperature...</div>
+            <div id="tempdiv2" class="sensor temp2">Getting temperature...</div>
+            <div id="touchdiv" class="sensor touch">Waiting for touch signal...</div>
+            <div id="toucheddiv" class="sensor touched">TOUCH!</div>
+            <div id="doordiv" class="sensor door">Waiting for door signal...</div>
+        </div>
+        <script src="jquery.min.js"></script>
+        <script type="text/javascript">
+            function doPollTemp1() {
+                getLatestEventAndUpdateDiv('https://disruptivesteria.s3.eu-west-2.amazonaws.com/DT_Temp01_temperature/latest.json', '#tempdiv1');
+            }
+
+            function doPollTemp2() {
+                 getLatestEventAndUpdateDiv('https://disruptivesteria.s3.eu-west-2.amazonaws.com/DT_Temp02_temperature/latest.json', '#tempdiv2');
+            }
+
+            function getLatestEventAndUpdateDiv(url, divId) {
+                  $.getJSON(
+                                url,
+                                function(data) {
+                                    console.log(data);
+                                    $(divId).empty();
+                                    $(divId)
+                                            .html(
+                                                    "<p>Temperature is: "
+                                                            + data.event.data.temperature.value
+                                                            + "&#8451; </p>");
+
+                                }).done(function() {
+                            console.log("done");
+                        }).fail(function() {
+                            console.log("error");
+                        });
+            }
+
+            function doPollTouch() {
+                  $.getJSON(
+                                "http://ec2-3-8-17-123.eu-west-2.compute.amazonaws.com/",
+                                function(data) {
+                                    console.log(data);
+                                    if(data.touched === "true") {
+                                        alert("Touch event!")
+                                    }
+                                }).done(function() {
+                            console.log("done");
+                        }).fail(function(err) {
+                            console.log(err);
+                        });
+            }
+
+            this.onpush = function(event) {
+                console.log(event.data);
+            }
+
+            $( '#toucheddiv' ).hide();
+            doPollTemp1();
+            doPollTemp2();
+
+            const evtSource = new EventSource("http://ec2-3-8-17-123.eu-west-2.compute.amazonaws.com/stream-flux");
+            evtSource.onmessage = function(event) { 
+                console.log(event) 
+                console.log(event.data)
+
+                if(event.data === "true") {
+                    $( '#touchdiv' ).hide();
+                    $( '#toucheddiv' ).show();
+                } else {
+                    $( '#touchdiv' ).show();
+                    $( '#toucheddiv' ).hide();
+                }
+            }
+
+            // const temp1Source = new EventSource("http://ec2-3-8-17-123.eu-west-2.compute.amazonaws.com/temp1-flux");
+            // temp1Source.onmessage = function(event) { 
+            //     $("#tempdiv1").empty();
+            //     $("#tempdiv1")
+            //             .html(
+            //                     "<p>Temperature is: "
+            //                             + event.data
+            //                             + "&#8451; </p>");
+
+            // }
+
+            // const temp2Source = new EventSource("http://ec2-3-8-17-123.eu-west-2.compute.amazonaws.com/temp2-flux");
+            // temp1Source.onmessage = function(event) { 
+            //     $("#tempdiv2").empty();
+            //     $("#tempdiv2")
+            //             .html(
+            //                     "<p>Temperature is: "
+            //                             + event.data
+            //                             + "&#8451; </p>");
+
+            // }
+
+           
+            //$(document).ready(function() {
+            //    setInterval(function(){ doPollTouch(); }, 10000);
+            //});
+            //      setInterval(function(){ doPollTemp1(); }, 5000);
+            //      setInterval(function(){ doPollTemp2(); }, 5000);
+            //  });
+
+        </script>
+
+    </div>
+
+</body>
+</html>

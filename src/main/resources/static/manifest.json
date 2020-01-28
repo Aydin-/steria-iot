@@ -1,0 +1,13 @@
+{
+	"name": "SteriaIOT",
+	"short_name": "SteriaIOT",
+	"start_url": "index.html",
+	"display": "standalone",
+	"background_color": "#fff",
+	"description": "Sopra Steria IOT Demo",
+	"icons": [
+		{
+			
+		}
+	]
+  }
