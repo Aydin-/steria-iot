@@ -26,6 +26,9 @@ public class SteriaIOTController {
     private static Date lastUpdate = Calendar.getInstance().getTime();
     private static boolean isTouched = false;
 
+    private static double temp1 = 21.0;
+    private static double temp2 = 21.0;
+
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity getIstouched(String test) {
         return ResponseEntity.ok(createResponse("" + isTouched));
@@ -61,10 +64,23 @@ public class SteriaIOTController {
 
     @PostMapping(path = "/temp1", produces = "application/json")
     public ResponseEntity setTemp1(@RequestBody Map<String, Object> payload) {
-        System.out.println("got temp POST");
+        System.out.println("got temp1 POST");
+        System.out.println(payload);
+        System.out.println(payload.get("value"));
+
+        temp1 = Double.parseDouble(""+ payload.get("value"));
+
+        return ResponseEntity.ok(createResponse("" + isTouched));
+    }
+
+    @PostMapping(path = "/temp2", produces = "application/json")
+    public ResponseEntity setTemp2(@RequestBody Map<String, Object> payload) {
+        System.out.println("got temp2 POST");
         System.out.println(payload);
         System.out.println(payload.get("temperature"));
-        
+
+        temp2 = Double.parseDouble(""+ payload.get("value"));
+
         return ResponseEntity.ok(createResponse("" + isTouched));
     }
 
