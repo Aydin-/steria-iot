@@ -65,12 +65,12 @@ public class SteriaIOTController {
 
     @GetMapping(path = "/temp1", produces = "application/json")
     public ResponseEntity getTemp1() {
-        return ResponseEntity.ok(new JSONObject().put("touched", temp1).toString());
+        return ResponseEntity.ok(new JSONObject().put("value", temp1).toString());
     }
 
     @GetMapping(path = "/temp2", produces = "application/json")
     public ResponseEntity getTemp2() {
-        return ResponseEntity.ok(new JSONObject().put("touched", temp2).toString());
+        return ResponseEntity.ok(new JSONObject().put("value", temp2).toString());
     }
 
     @PostMapping(path = "/temp1", produces = "application/json")

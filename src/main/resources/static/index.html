@@ -71,11 +71,11 @@ body {
         <script src="jquery.min.js"></script>
         <script type="text/javascript">
             function doPollTemp1() {
-                getLatestEventAndUpdateDiv('https://disruptivesteria.s3.eu-west-2.amazonaws.com/DT_Temp01_temperature/latest.json', '#tempdiv1');
+                getLatestEventAndUpdateDiv('http://ec2-35-178-102-231.eu-west-2.compute.amazonaws.com/temp1', '#tempdiv1');
             }
 
             function doPollTemp2() {
-                 getLatestEventAndUpdateDiv('https://disruptivesteria.s3.eu-west-2.amazonaws.com/DT_Temp02_temperature/latest.json', '#tempdiv2');
+                 getLatestEventAndUpdateDiv('http://ec2-35-178-102-231.eu-west-2.compute.amazonaws.com/temp2', '#tempdiv2');
             }
 
             function getLatestEventAndUpdateDiv(url, divId) {
@@ -87,7 +87,7 @@ body {
                                     $(divId)
                                             .html(
                                                     "<p>Temperature is: "
-                                                            + data.event.data.temperature.value
+                                                            + data.value
                                                             + "&#8451; </p>");
 
                                 }).done(function() {
@@ -160,9 +160,10 @@ body {
             //$(document).ready(function() {
             //    setInterval(function(){ doPollTouch(); }, 10000);
             //});
-            //      setInterval(function(){ doPollTemp1(); }, 5000);
-            //      setInterval(function(){ doPollTemp2(); }, 5000);
-            //  });
+            $(document).ready(function() {
+                  setInterval(function(){ doPollTemp1(); }, 5000);
+                  setInterval(function(){ doPollTemp2(); }, 5000);
+             });
 
         </script>
 
