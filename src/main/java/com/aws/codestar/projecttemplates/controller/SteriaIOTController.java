@@ -36,13 +36,13 @@ public class SteriaIOTController {
         System.out.println(payload.get("timestamp"));
         String timestamp = "" + payload.get("timestamp");
 
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
         Date date = format.parse(timestamp);
 
         if (date.after(lastUpdate)) {
             isTouched = true;
 
-            System.out.println("IS TOUCHED AND " + timestamp + " is after " + lastUpdate.toString());
+            System.out.println("IS TOUCHED AND " + date + " is after " + lastUpdate);
 
             lastUpdate = date;
         } else {
