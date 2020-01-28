@@ -41,31 +41,5 @@ class HelloWorldControllerTest {
         // Use as needed.
     }
 
-    /**
-     * Basic test to verify the result obtained when calling {@link HelloWorldController#helloWorldGet} successfully.
-     */
-    @Test
-    @DisplayName("Basic test for GET request")
-    void testGetRequest() {
-        ResponseEntity responseEntity = controller.helloWorldGet(INPUT_NAME);
 
-        // Verify the response obtained matches the values we expect.
-        JSONObject jsonObjectFromResponse = new JSONObject(responseEntity.getBody().toString());
-        assertEquals(EXPECTED_RESPONSE_VALUE, jsonObjectFromResponse.get("Output"));
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
-
-    /**
-     * Basic test to verify the result obtained when calling {@link HelloWorldController#helloWorldPost} successfully.
-     */
-    @Test
-    @DisplayName("Basic test for POST request")
-    void testPostRequest() {
-        ResponseEntity responseEntity = controller.helloWorldPost(INPUT_NAME);
-
-        // Verify the response obtained matches the values we expect.
-        JSONObject jsonObjectFromResponse = new JSONObject(responseEntity.getBody().toString());
-        assertEquals(EXPECTED_RESPONSE_VALUE, jsonObjectFromResponse.get("Output"));
-        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
-    }
 }
