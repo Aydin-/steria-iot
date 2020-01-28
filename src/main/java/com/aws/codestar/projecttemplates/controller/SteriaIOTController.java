@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
+import java.util.Map;
 
 /**
  * Basic Spring web service controller that handles all GET requests.
@@ -24,8 +25,8 @@ public class SteriaIOTController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
-        System.out.println(httpEntity.getBody());
+    public ResponseEntity setIsTouched(@RequestBody Map<String, Object> payload) {
+        System.out.println(payload.get("timestamp"));
         isTouched = true;
         return ResponseEntity.ok(createResponse("true"));
     }
