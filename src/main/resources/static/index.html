@@ -120,7 +120,7 @@ body {
             doPollTemp1();
             doPollTemp2();
 
-            const evtSource = new EventSource("http://ec2-3-8-17-123.eu-west-2.compute.amazonaws.com/stream-flux");
+            const evtSource = new EventSource("http://ec2-35-178-102-231.eu-west-2.compute.amazonaws.com/stream-flux");
             evtSource.onmessage = function(event) { 
                 console.log(event) 
                 console.log(event.data)
