@@ -41,8 +41,12 @@ public class SteriaIOTController {
 
         if (date.after(lastUpdate)) {
             isTouched = true;
-            lastUpdate = date;
+
             System.out.println("IS TOUCHED AND " + timestamp + " is after " + lastUpdate.toString());
+
+            lastUpdate = date;
+        } else {
+            System.out.println("Ignored event because event timestamp " + date + " is before last update time: " + lastUpdate);
         }
 
         return ResponseEntity.ok(createResponse("true"));
