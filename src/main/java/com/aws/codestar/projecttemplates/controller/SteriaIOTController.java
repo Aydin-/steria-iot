@@ -1,5 +1,6 @@
 package com.aws.codestar.projecttemplates.controller;
 
+import org.apache.coyote.Response;
 import org.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
@@ -60,6 +61,16 @@ public class SteriaIOTController {
         return Flux.interval(Duration.ofSeconds(2))
                 .map(sequence -> "" + isTouched)
                 .doOnNext(a -> isTouched = false);
+    }
+
+    @GetMapping(path = "/temp1", produces = "application/json")
+    public ResponseEntity getTemp1() {
+        return ResponseEntity.ok(new JSONObject().put("touched", temp1).toString());
+    }
+
+    @GetMapping(path = "/temp2", produces = "application/json")
+    public ResponseEntity getTemp2() {
+        return ResponseEntity.ok(new JSONObject().put("touched", temp2).toString());
     }
 
     @PostMapping(path = "/temp1", produces = "application/json")
