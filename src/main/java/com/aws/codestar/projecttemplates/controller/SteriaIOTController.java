@@ -55,7 +55,10 @@ public class SteriaIOTController {
 
             System.out.println("IS TOUCHED AND " + date + " is after " + lastUpdate);
 
-            lastUpdate = date;
+            System.out.println("CURRENT TIME -->> " + Calendar.getInstance().getTime());
+            System.out.println("UPDATE TIME -->> " + date);
+
+                    lastUpdate = Calendar.getInstance().getTime();
         } else {
             System.out.println("Ignored event because event timestamp " + date + " is before last update time: " + lastUpdate);
         }
