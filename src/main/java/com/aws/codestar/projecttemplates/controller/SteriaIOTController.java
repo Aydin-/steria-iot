@@ -34,6 +34,7 @@ public class SteriaIOTController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(@RequestBody Map<String, Object> payload) throws ParseException {
         System.out.println(payload.get("timestamp"));
+        System.out.println(payload.get("touch"));
         String timestamp = "" + payload.get("timestamp");
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
@@ -54,7 +55,7 @@ public class SteriaIOTController {
 
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
-        return Flux.interval(Duration.ofSeconds(1))
+        return Flux.interval(Duration.ofSeconds(2))
                 .map(sequence -> "" + isTouched)
                 .doOnNext(a -> isTouched = false);
     }
