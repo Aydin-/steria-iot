@@ -1,11 +1,13 @@
 package com.aws.codestar.projecttemplates.controller;
 
 import org.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+
+import java.time.Duration;
 
 /**
  * Basic Spring web service controller that handles all GET requests.
@@ -14,19 +16,27 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/")
 public class HelloWorldController {
 
-    private static final String MESSAGE_FORMAT = "Hello %s!";
+    private static boolean isTouched = false;
 
     @RequestMapping(method = RequestMethod.GET, produces = "application/json")
-    public ResponseEntity helloWorldGet(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ResponseEntity.ok(createResponse(name));
+    public ResponseEntity getIstouched(String test) {
+        return ResponseEntity.ok(createResponse("" + isTouched));
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity helloWorldPost(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return ResponseEntity.ok(createResponse(name));
+    public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
+        isTouched = true;
+        return ResponseEntity.ok(createResponse("true"));
+    }
+
+    @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> streamFlux() {
+        return Flux.interval(Duration.ofSeconds(1))
+                .map(sequence -> "" + isTouched)
+                .doOnEach(a -> isTouched = false);
     }
 
     private String createResponse(String name) {
-        return new JSONObject().put("Output", String.format(MESSAGE_FORMAT, name)).toString();
+        return new JSONObject().put("touched", name).toString();
     }
 }
