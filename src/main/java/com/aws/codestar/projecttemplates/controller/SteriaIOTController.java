@@ -48,14 +48,6 @@ public class SteriaIOTController {
         return ResponseEntity.ok(createResponse("true"));
     }
 
-    @RequestMapping(path="/temp1", method = RequestMethod.POST, produces = "application/json")
-    public ResponseEntity setTemp1(@RequestBody Map<String, Object> payload) throws ParseException {
-        System.out.println(payload);
-        System.out.println(payload.get("value"));
-
-        return ResponseEntity.ok(createResponse("true"));
-    }
-
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
         return Flux.interval(Duration.ofSeconds(1))
