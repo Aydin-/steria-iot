@@ -34,7 +34,6 @@ public class SteriaIOTController {
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(@RequestBody Map<String, Object> payload) throws ParseException {
         System.out.println(payload.get("timestamp"));
-        System.out.println(payload.get("touch"));
         String timestamp = "" + payload.get("timestamp");
 
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'");
@@ -58,6 +57,15 @@ public class SteriaIOTController {
         return Flux.interval(Duration.ofSeconds(2))
                 .map(sequence -> "" + isTouched)
                 .doOnNext(a -> isTouched = false);
+    }
+
+    @PostMapping(path = "/temp1", produces = "application/json")
+    public ResponseEntity setTemp1(@RequestBody Map<String, Object> payload) {
+        System.out.println("got temp POST");
+        System.out.println(payload);
+        System.out.println(payload.get("temperature"));
+        
+        return ResponseEntity.ok(createResponse("" + isTouched));
     }
 
     private String createResponse(String name) {
