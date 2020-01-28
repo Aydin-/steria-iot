@@ -14,7 +14,7 @@ import java.time.Duration;
  */
 @RestController
 @RequestMapping("/")
-public class HelloWorldController {
+public class SteriaIOTController {
 
     private static boolean isTouched = false;
 
@@ -25,6 +25,7 @@ public class HelloWorldController {
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity setIsTouched(HttpEntity<String> httpEntity) {
+        System.out.println(httpEntity.getBody());
         isTouched = true;
         return ResponseEntity.ok(createResponse("true"));
     }
@@ -33,7 +34,7 @@ public class HelloWorldController {
     public Flux<String> streamFlux() {
         return Flux.interval(Duration.ofSeconds(1))
                 .map(sequence -> "" + isTouched)
-                .doOnEach(a -> isTouched = false);
+                .doOnNext(a -> isTouched = false);
     }
 
     private String createResponse(String name) {
