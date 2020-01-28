@@ -54,7 +54,6 @@ public class SteriaIOTController {
             isTouched = true;
 
             System.out.println("IS TOUCHED AND " + date + " is after " + lastUpdate);
-
             System.out.println("CURRENT TIME -->> " + Calendar.getInstance().getTime());
             System.out.println("UPDATE TIME -->> " + date);
 
