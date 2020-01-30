@@ -1,8 +1,6 @@
 package com.aws.codestar.projecttemplates.controller;
 
-import org.apache.coyote.Response;
 import org.json.JSONObject;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +10,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Map;
 import java.util.Date;
+import java.util.Map;
 
-/**
- * Basic Spring web service controller that handles all GET requests.
- */
 @RestController
 @RequestMapping("/")
 public class SteriaIOTController {
@@ -53,11 +47,7 @@ public class SteriaIOTController {
         if (date.after(lastUpdate)) {
             isTouched = true;
 
-            System.out.println("IS TOUCHED AND " + date + " is after " + lastUpdate);
-            System.out.println("CURRENT TIME -->> " + Calendar.getInstance().getTime());
-            System.out.println("UPDATE TIME -->> " + date);
-
-                    lastUpdate = Calendar.getInstance().getTime();
+            lastUpdate = Calendar.getInstance().getTime();
         } else {
             System.out.println("Ignored event because event timestamp " + date + " is before last update time: " + lastUpdate);
         }
@@ -67,7 +57,7 @@ public class SteriaIOTController {
 
     @GetMapping(path = "/stream-flux", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<String> streamFlux() {
-        return Flux.interval(Duration.ofSeconds(2))
+        return Flux.interval(Duration.ofSeconds(1))
                 .map(sequence -> "" + isTouched)
                 .doOnNext(a -> isTouched = false);
     }

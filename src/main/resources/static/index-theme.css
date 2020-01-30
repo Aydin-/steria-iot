@@ -1,0 +1,97 @@
+body {
+    background-color: white;
+    background-image: url("img-noise.png");
+    background-repeat: repeat;
+}
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+
+.sensor {
+    padding: 5px;
+    size: 22px;
+    color: white;
+    width: 200px;
+    height: 50px;
+    position: relative;
+    background-color: rgb(91, 215, 91, 0.9);
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgb(217, 217, 217);
+    border-style: groove;
+}
+
+.temp1 {
+    top: -520px;
+    left: 960px;
+}
+
+.temp2 {
+    top: -200px;
+    left: 140px;
+}
+
+.touch {
+    top: -170px;
+    left: 780px;
+}
+
+.touched {
+    top: -170px;
+    left: 780px;
+    background-color: rgb(255, 165, 0, 0.9);
+    border-radius: 10px;
+    border-width: 3px;
+    border-color: rgb(217, 217, 217);
+    display: hidden;
+}
+
+.door {
+    top: -420px;
+    left: 870px;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 88px;
+  z-index: 10;
+  padding-left: 20px;
+  background: #eeeeee;
+  -webkit-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+  -moz-box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 7px 8px rgba(0, 0, 0, 0.12);
+    text-align: right;
+}
+
+.orange_div {
+    background-color: rgb(255, 165, 0, 0.9);
+}
+
+.header__content-text {
+  text-align: center;
+}
+
+.header__content-logo {
+  text-align: right;
+}
+
+.page__content-container {
+  width: 100%;
+  padding: 80px;
+}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
